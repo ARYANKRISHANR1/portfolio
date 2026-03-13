@@ -3,559 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aryan Krishan | Welcome to My Universe</title>
+    <title>Aryan Krishan | Portfolio</title>
     <style>
-        /* CSS Variables & Base Styles */
         :root {
             --primary-color: #0f172a;
             --secondary-color: #3b82f6;
             --text-color: #ffffff;
+            --accent-font: 'Inter', system-ui, sans-serif;
         }
 
-        /* Modern, clean font for the whole site */
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: var(--accent-font);
             margin: 0;
             padding: 0;
             color: var(--text-color);
-            line-height: 1.6;
-            background-color: #020205; /* Deepest space black */
+            background-color: #020205;
             overflow-x: hidden;
-            /* Custom Pen Cursor */
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7.127 22.562l-7.127 1.438 1.438-7.128 5.689 5.69zm1.414-1.414l11.228-11.225-5.69-5.692-11.227 11.227 5.689 5.69zm9.768-21.148l-2.816 2.817 5.691 5.691 2.816-2.819-5.691-5.689z" fill="%23ffffff"/></svg>') 0 24, auto;
         }
 
-        /* Space Canvas Background */
-        #space-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1; 
-        }
-
-        /* Sparkle Effect */
-        .sparkle {
-            position: fixed;
-            pointer-events: none;
-            width: 4px;
-            height: 4px;
-            background-color: white;
-            border-radius: 50%;
-            box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.8);
-            z-index: 9999;
-            animation: sparkleFade 0.8s ease-out forwards;
-        }
-
-        @keyframes sparkleFade {
-            0% { opacity: 1; transform: scale(1) translateY(0); }
-            100% { opacity: 0; transform: scale(0.1) translateY(15px); }
-        }
-
-        /* Intro Sequence Overlay - NOW TRANSPARENT to see stars */
-        #intro-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: transparent; /* Changed from solid black */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            transition: opacity 1.5s ease, transform 1.5s ease;
-        }
-
-        /* Sleek modern font for the intro */
-        #intro-overlay h1 {
-            font-size: 4rem;
-            letter-spacing: 2px;
-            margin-bottom: 30px;
-            font-weight: 300; 
-            text-align: center;
-        }
-
-        #lets-go-btn {
-            padding: 12px 40px;
-            font-size: 1.2rem;
-            background-color: transparent;
-            color: white;
-            border: 1px solid white;
-            border-radius: 30px;
-            cursor: inherit;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        #lets-go-btn:hover {
-            background-color: white;
-            color: black;
-            box-shadow: 0 0 20px rgba(255,255,255,0.3);
-        }
+        #space-canvas { position: fixed; top: 0; left: 0; z-index: -1; }
 
         /* Navigation */
         nav {
-            background-color: rgba(5, 5, 10, 0.5);
-            backdrop-filter: blur(10px);
-            color: white;
-            padding: 1.5rem 5%;
+            padding: 2rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: rgba(2, 2, 5, 0.8);
+            backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
-            z-index: 100;
-            opacity: 0; /* Hidden until warp jump */
-            transition: opacity 1s ease;
+            z-index: 1000;
         }
-
-        nav h1 { margin: 0; font-size: 1.2rem; font-weight: 600; letter-spacing: 1px; }
-        
-        .nav-links { display: flex; gap: 25px; }
-        .nav-links a {
-            color: #94a3b8;
-            text-decoration: none;
-            font-weight: 400;
-            font-size: 0.95rem;
-            cursor: inherit;
-            transition: color 0.3s ease;
-        }
+        nav h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; margin: 0; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { color: #94a3b8; text-decoration: none; font-size: 0.9rem; transition: 0.3s; cursor: inherit;}
         .nav-links a:hover, .nav-links a.active { color: white; }
 
-        /* General Sections */
-        .page-section {
-            display: none;
-            padding: 4rem 5%;
-            max-width: 1000px;
-            margin: 0 auto;
-            animation: fadeIn 0.5s ease;
-            position: relative;
-        }
-        
-        /* Glassmorphism boxes for content to float over space */
-        .content-bg {
-            background: rgba(15, 23, 42, 0.4);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .page-section.active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h2 { font-weight: 400; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 15px; margin-bottom: 30px;}
-
         /* Hero Section */
-        #home {
-            display: none; 
-            max-width: 1200px;
-            min-height: 80vh;
-        }
-        
-        .hero-container {
+        .hero {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 100%;
-            margin-top: 5vh;
+            min-height: 85vh;
+            padding: 0 8%;
+            gap: 40px;
         }
-
-        .hero-text {
-            flex: 1;
-        }
-
-        .hero-text h1 {
-            font-size: 4rem;
-            line-height: 1.2;
-            margin: 0 0 30px 0;
-            font-weight: 300;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-        }
-
-        .pill-btn {
-            background-color: white;
-            color: #000;
-            font-size: 1rem;
-            font-weight: 500;
-            padding: 12px 35px;
-            border-radius: 50px;
-            border: none;
+        .hero-text { flex: 1.2; }
+        .hero-text h1 { font-size: 5rem; line-height: 1.1; font-weight: 800; margin-bottom: 40px; }
+        .hero-btns { display: flex; gap: 20px; }
+        .btn {
+            padding: 16px 45px;
+            border-radius: 100px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
             cursor: inherit;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .btn-white { background: white; color: black; }
+        .btn-outline { border: 1px solid rgba(255,255,255,0.3); color: white; }
+
+        /* LARGE IMAGE FIX */
+        .hero-img { flex: 1; display: flex; justify-content: center; }
+        .hero-img img { 
+            width: 100%; 
+            max-width: 550px; /* Increased size */
+            height: auto; 
+            object-fit: contain;
+            filter: drop-shadow(0 0 50px rgba(59, 130, 246, 0.2));
         }
 
-        .pill-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
-        }
-
-        /* Fixed Image Aspect Ratio */
-        .hero-image {
-            flex: 1;
-            display: flex;
-            justify-content: center; /* Centers the image */
-            align-items: flex-end;
-            height: 600px; /* Gives the image a fixed area to exist in */
-        }
-
-        .hero-image img {
-            max-width: 100%;
-            height: 100%; /* forces it to take the height of the container */
-            width: auto; /* prevents horizontal stretching */
-            object-fit: contain; /* PERFECT RATIO: prevents any squishing */
-        }
-
-        /* Cards */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .card {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 25px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: background 0.3s ease;
-        }
-        .card:hover { background: rgba(255, 255, 255, 0.08); }
-
-        /* Forms */
-        input, textarea {
-            width: 100%; padding: 12px; margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; box-sizing: border-box;
-            background: rgba(0,0,0,0.3); color: white;
-            cursor: inherit;
-            font-family: inherit;
-        }
-
-        /* Chatbot: aryan jr. */
+        /* Chatbot: aryan jr. (Professional Redesign) */
         #chatbot-container {
-            position: fixed; bottom: 20px; right: 20px;
-            width: 320px; z-index: 1000;
-            color: #333;
+            position: fixed; bottom: 30px; right: 30px;
+            width: 350px; z-index: 2000;
         }
         #chatbot-header {
-            background-color: white; color: black;
-            padding: 15px; border-radius: 12px 12px 0 0;
-            cursor: inherit; font-weight: 600; display: flex; justify-content: space-between;
+            background: #ffffff; color: #000;
+            padding: 15px 20px; border-radius: 15px 15px 0 0;
+            display: flex; align-items: center; justify-content: space-between;
+            font-weight: 700; cursor: inherit;
         }
+        .aj-logo { background: #000; color: #fff; padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; margin-right: 10px; }
         #chatbot-window {
-            background: white; border-radius: 0 0 12px 12px; display: none; flex-direction: column;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: #ffffff; display: none; flex-direction: column;
+            border-radius: 0 0 15px 15px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
-        #chatbot-messages {
-            height: 250px; padding: 15px; overflow-y: auto; font-size: 0.9rem;
-            border-bottom: 1px solid #eee; background: #f8fafc;
-        }
-        .bot-msg { background: #e2e8f0; padding: 10px; border-radius: 8px; margin-bottom: 10px; display: inline-block;}
-        #chatbot-input-area { display: flex; padding: 10px; background: white; border-radius: 0 0 12px 12px;}
-        #chatbot-input-area input { margin-bottom: 0; border: 1px solid #ddd; border-radius: 6px 0 0 6px; color: black; background: white; padding: 10px;}
-        #chatbot-input-area button { border-radius: 0 6px 6px 0; padding: 10px 15px; background-color: black; color: white; border: none; cursor: inherit;}
+        #chatbot-messages { height: 300px; padding: 20px; overflow-y: auto; color: #334155; font-size: 0.9rem; background: #f8fafc; }
+        .msg { margin-bottom: 15px; line-height: 1.4; padding: 10px 14px; border-radius: 12px; max-width: 85%; }
+        .bot { background: #e2e8f0; align-self: flex-start; }
+        .user { background: #000; color: #fff; align-self: flex-end; margin-left: auto; }
+        #chatbot-input-area { display: flex; padding: 15px; background: #fff; border-top: 1px solid #e2e8f0; }
+        #chatbot-input-area input { flex: 1; border: none; outline: none; font-family: inherit; font-size: 0.9rem; }
+        #chatbot-input-area button { background: none; border: none; font-weight: 700; cursor: inherit; color: var(--secondary-color); }
 
+        /* Animation Classes */
+        .page-section { display: none; padding: 100px 8%; animation: fadeInUp 0.6s ease forwards; }
+        .active { display: block; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 1024px) {
+            .hero { flex-direction: column; text-align: center; padding-top: 50px; }
+            .hero-text h1 { font-size: 3.5rem; }
+            .hero-btns { justify-content: center; }
+        }
     </style>
 </head>
 <body>
 
     <canvas id="space-canvas"></canvas>
 
-    <div id="intro-overlay">
-        <h1>Welcome to my universe</h1>
-        <button id="lets-go-btn" onclick="startJourney()">Let's go</button>
-    </div>
-
-    <nav id="main-nav">
+    <nav>
         <h1>Aryan Krishan</h1>
         <div class="nav-links">
-            <a onclick="showPage('home')" class="active" id="link-home">Home</a>
-            <a onclick="showPage('about')" id="link-about">About</a>
-            <a onclick="showPage('projects')" id="link-projects">Projects</a>
-            <a onclick="showPage('blogs')" id="link-blogs">Blogs</a>
-            <a onclick="showPage('contact')" id="link-contact">Contact Me</a>
+            <a onclick="showPage('home')" id="link-home" class="active">Home</a>
+            <a onclick="showPage('about')">About</a>
+            <a onclick="showPage('projects')">Projects</a>
+            <a onclick="showPage('contact')">Contact</a>
         </div>
     </nav>
 
-    <main id="home" class="page-section">
-        <div class="hero-container">
+    <main id="home" class="page-section active">
+        <section class="hero">
             <div class="hero-text">
                 <h1>Hi,<br>I'm Aryan Krishan<br>Product and Marketing guy</h1>
-                <div class="hero-buttons">
-                    <button class="pill-btn" onclick="showPage('projects')">My Work</button>
-                    <button class="pill-btn" onclick="window.open('resume.pdf', '_blank')">Resume</button>
+                <div class="hero-btns">
+                    <a onclick="showPage('projects')" class="btn btn-white">My Work</a>
+                    <a href="#" class="btn btn-outline">Resume</a>
                 </div>
             </div>
-            <div class="hero-image">
-                <img src="Aryan Krishan.png" alt="Aryan Krishan">
+            <div class="hero-img">
+                <img src="YOUR_IMAGE_LINK.png" alt="Aryan Krishan">
             </div>
-        </div>
-    </main>
-
-    <main id="about" class="page-section">
-        <div class="content-bg">
-            <h2>About Me</h2>
-            <p>I am a dynamic business professional currently pursuing an MBA at IIT Jodhpur, building upon a strong foundation with a BSc in Psychology. I combine analytical thinking with an understanding of human behavior to drive business results.</p>
-            
-            <h3 style="margin-top: 30px;">Professional Experience</h3>
-            <ul>
-                <li><strong>Jai Bharat Industries</strong> - 15 months of impactful work experience managing operations and strategy.</li>
-                <li><strong>Spice N Grilled Foods Pvt. Ltd. (SGF)</strong> - Marketing Internship focusing on brand outreach.</li>
-                <li>Google Project Management Professional Certificate holder.</li>
-            </ul>
-
-            <h3 style="margin-top: 30px;">Beyond the Desk</h3>
-            <p>When I'm not optimizing dashboards or building businesses, I am an avid ultra-marathon runner constantly pushing my limits (current 5km PR: 17:22). I also host the <em>House of Perspective</em> podcast, exploring diverse ideas and stories.</p>
-        </div>
+        </section>
     </main>
 
     <main id="projects" class="page-section">
-        <div class="content-bg">
-            <h2>Featured Projects</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3 style="margin-top: 0;">Mercedes-Benz Sales Dashboard</h3>
-                    <p style="color: #cbd5e1;">A comprehensive Power BI dashboard built to visualize complex automotive sales data, highlighting key performance indicators and regional trends for strategic decision-making.</p>
-                </div>
-                <div class="card">
-                    <h3 style="margin-top: 0;">Not Average (Clothing Brand)</h3>
-                    <p style="color: #cbd5e1;">Founded an entrepreneurial venture focused on high-quality streetwear. Managed everything from the conceptualization of "The Ritual" product lines to go-to-market strategies.</p>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <main id="blogs" class="page-section">
-        <div class="content-bg">
-            <h2>Latest Insights</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3 style="margin-top: 0;">The Intersection of Psychology and Marketing</h3>
-                    <p style="color: #cbd5e1;"><em>Coming soon.</em> An exploration into neuromarketing and how understanding human behavior drives better sales strategies.</p>
-                </div>
-                <div class="card">
-                    <h3 style="margin-top: 0;">Endurance in Business: Lessons from Ultra-Marathons</h3>
-                    <p style="color: #cbd5e1;"><em>Coming soon.</em> How the mental fortitude required for long-distance running translates perfectly into startup entrepreneurship.</p>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <main id="contact" class="page-section">
-        <div class="content-bg">
-            <h2>Contact Me</h2>
-            <p>Interested in collaborating, discussing a project, or just talking about Formula 1? Leave a message below.</p>
-            <form style="max-width: 500px; margin-top: 30px;" onsubmit="event.preventDefault(); alert('Message feature coming soon!');">
-                <input type="text" placeholder="Your Name" required>
-                <input type="email" placeholder="Your Email" required>
-                <textarea rows="5" placeholder="How can I help you?" required></textarea>
-                <button type="submit" style="background-color: white; color: black; border: none; padding: 12px 25px; border-radius: 4px; font-weight: 500;">Send Message</button>
-            </form>
-        </div>
+        <h1>Projects</h1>
+        <p>Training "aryan jr." on my data... check the chat for details.</p>
     </main>
 
     <div id="chatbot-container">
         <div id="chatbot-header" onclick="toggleChat()">
-            <span>🤖 aryan jr.</span>
-            <span id="chat-icon">▲</span>
+            <div><span class="aj-logo">AJ</span> aryan jr.</div>
+            <span id="chat-toggle-icon">▲</span>
         </div>
         <div id="chatbot-window">
-            <div id="chatbot-messages">
-                <div class="bot-msg">Hi! I'm aryan jr. How can I help you navigate Aryan's universe today?</div>
+            <div id="chatbot-messages" style="display: flex; flex-direction: column;">
+                <div class="msg bot">Hello! I'm aryan jr., trained on Aryan's professional history. Ask me about his MBA, his running, or his marketing experience!</div>
             </div>
             <div id="chatbot-input-area">
-                <input type="text" id="chat-input" placeholder="Ask something..." onkeypress="handleChat(event)">
+                <input type="text" id="chat-input" placeholder="Type a message..." onkeypress="if(event.key==='Enter') sendMsg()">
                 <button onclick="sendMsg()">Send</button>
             </div>
         </div>
     </div>
 
     <script>
-        // --- SPARKLE CURSOR LOGIC ---
-        let lastSparkleTime = 0;
-        document.addEventListener('mousemove', function(e) {
-            const now = Date.now();
-            if (now - lastSparkleTime > 40) {
-                createSparkle(e.clientX, e.clientY);
-                lastSparkleTime = now;
-            }
-        });
+        // --- DATA TRAINING (KNOWLEDGE BASE) ---
+        const aryanData = {
+            "education": "Aryan is currently pursuing an MBA at IIT Jodhpur and holds a BSc in Psychology.",
+            "running": "Aryan is an ultra-marathoner with a 5km Personal Record of 17 minutes and 22 seconds.",
+            "work": "He has 15 months of experience at Jai Bharat Industries and interned at SGF Foods.",
+            "brand": "He founded the clothing brand 'Not Average'.",
+            "podcast": "He hosts the 'House of Perspective' podcast.",
+            "skills": "He is expert in Product Marketing, Power BI, and Project Management (Google Certified)."
+        };
 
-        function createSparkle(x, y) {
-            const sparkle = document.createElement('div');
-            sparkle.className = 'sparkle';
-            sparkle.style.left = (x - 2) + 'px';
-            sparkle.style.top = (y + 10) + 'px';
-            document.body.appendChild(sparkle);
-            setTimeout(() => sparkle.remove(), 800);
+        function getBotResponse(input) {
+            const query = input.toLowerCase();
+            if (query.includes("mba") || query.includes("study") || query.includes("education")) return aryanData.education;
+            if (query.includes("run") || query.includes("marathon") || query.includes("pr")) return aryanData.running;
+            if (query.includes("experience") || query.includes("work") || query.includes("job")) return aryanData.work;
+            if (query.includes("brand") || query.includes("not average")) return aryanData.brand;
+            if (query.includes("skills") || query.includes("power bi")) return aryanData.skills;
+            return "That's a great question! While I'm still learning, I know Aryan is a Product & Marketing expert. You should check his Resume or Projects section!";
         }
 
-        // --- NEW REALISTIC 3D STARFIELD & WARP LOGIC ---
-        const canvas = document.getElementById('space-canvas');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let stars = [];
-        const numStars = 600; // More stars for realism
-        let speed = 0.2; // Very slow ambient movement
-        let isWarping = false;
-
-        function resize() {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            canvas.width = width;
-            canvas.height = height;
-        }
-        window.addEventListener('resize', resize);
-        resize();
-
-        // Initialize realistic stars
-        for (let i = 0; i < numStars; i++) {
-            stars.push({
-                x: Math.random() * width * 2 - width,
-                y: Math.random() * height * 2 - height,
-                z: Math.random() * width,
-                pz: Math.random() * width // Previous Z for drawing lines
-            });
-        }
-
-        function drawStars() {
-            // Very dark, slightly transparent background to create trails during warp
-            ctx.fillStyle = isWarping ? 'rgba(2, 2, 5, 0.2)' : 'rgba(2, 2, 5, 1)';
-            ctx.fillRect(0, 0, width, height);
-            
-            stars.forEach(star => {
-                star.pz = star.z;
-                star.z -= speed;
-
-                if (star.z <= 0) {
-                    star.z = width;
-                    star.pz = width;
-                    star.x = Math.random() * width * 2 - width;
-                    star.y = Math.random() * height * 2 - height;
-                }
-
-                // 3D projection math
-                const k = 128.0 / star.z;
-                const px = star.x * k + width / 2;
-                const py = star.y * k + height / 2;
-                
-                const pk = 128.0 / star.pz;
-                const ppx = star.x * pk + width / 2;
-                const ppy = star.y * pk + height / 2;
-                
-                // Opacity based on distance (z)
-                const opacity = Math.min(1, (1 - star.z / width) * 2);
-
-                if (px >= 0 && px <= width && py >= 0 && py <= height) {
-                    if (isWarping) {
-                        // Draw lightspeed streaks
-                        ctx.beginPath();
-                        ctx.moveTo(ppx, ppy);
-                        ctx.lineTo(px, py);
-                        ctx.lineWidth = (1 - star.z / width) * 3;
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
-                        ctx.stroke();
-                    } else {
-                        // Draw realistic sharp star points
-                        const size = Math.max(0.5, (1 - star.z / width) * 2);
-                        ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
-                        ctx.fillRect(px, py, size, size);
-                    }
-                }
-            });
-
-            requestAnimationFrame(drawStars);
-        }
-        drawStars();
-
-        // --- TRANSITION LOGIC ---
-        function startJourney() {
-            speed = 40; // Lightspeed engage!
-            isWarping = true;
-            
-            const intro = document.getElementById('intro-overlay');
-            intro.style.transform = 'scale(2)'; // Zoom text out
-            intro.style.opacity = '0';
-
-            setTimeout(() => {
-                intro.style.display = 'none';
-                
-                // Settle back to ambient space
-                speed = 0.5;
-                isWarping = false;
-                
-                // Fade in main site
-                document.getElementById('main-nav').style.opacity = '1';
-                document.getElementById('home').style.display = 'block';
-                void document.getElementById('home').offsetWidth; // Trigger reflow
-                document.getElementById('home').classList.add('active');
-            }, 1000); 
-        }
-
-        // --- NAVIGATION LOGIC ---
-        function showPage(pageId) {
-            const sections = document.querySelectorAll('.page-section');
-            sections.forEach(sec => {
-                sec.classList.remove('active');
-                if(sec.id === 'home') sec.style.display = 'none'; 
-            });
-            
-            const links = document.querySelectorAll('.nav-links a');
-            links.forEach(link => link.classList.remove('active'));
-
-            const targetSection = document.getElementById(pageId);
-            if(pageId === 'home') targetSection.style.display = 'block';
-            targetSection.classList.add('active');
-            
-            document.getElementById('link-' + pageId).classList.add('active');
+        // --- NAVIGATION ---
+        function showPage(id) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
             window.scrollTo(0,0);
         }
 
         // --- CHATBOT LOGIC ---
         function toggleChat() {
-            const windowEl = document.getElementById('chatbot-window');
-            const icon = document.getElementById('chat-icon');
-            if (windowEl.style.display === 'flex') {
-                windowEl.style.display = 'none';
-                icon.textContent = '▲';
-            } else {
-                windowEl.style.display = 'flex';
-                icon.textContent = '▼';
-            }
-        }
-
-        function handleChat(e) {
-            if (e.key === 'Enter') sendMsg();
+            const win = document.getElementById('chatbot-window');
+            win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
         }
 
         function sendMsg() {
             const input = document.getElementById('chat-input');
-            const msg = input.value.trim();
-            if (!msg) return;
+            const container = document.getElementById('chatbot-messages');
+            if(!input.value.trim()) return;
 
-            const msgContainer = document.getElementById('chatbot-messages');
-            
-            const userDiv = document.createElement('div');
-            userDiv.style.textAlign = 'right';
-            userDiv.innerHTML = `<span style="background:black; color:white; padding:10px; border-radius:8px; margin-bottom:10px; display:inline-block;">${msg}</span>`;
-            msgContainer.appendChild(userDiv);
-            
+            // User Message
+            const uDiv = document.createElement('div');
+            uDiv.className = 'msg user';
+            uDiv.textContent = input.value;
+            container.appendChild(uDiv);
+
+            // Bot Response
+            const response = getBotResponse(input.value);
             input.value = '';
 
             setTimeout(() => {
-                const botDiv = document.createElement('div');
-                botDiv.innerHTML = `<span class="bot-msg">Aryan is currently optimizing his Power BI dashboard, but he'll get back to you soon. Please use the Contact page to send a formal email.</span>`;
-                msgContainer.appendChild(botDiv);
-                msgContainer.scrollTop = msgContainer.scrollHeight;
+                const bDiv = document.createElement('div');
+                bDiv.className = 'msg bot';
+                bDiv.textContent = response;
+                container.appendChild(bDiv);
+                container.scrollTop = container.scrollHeight;
             }, 600);
         }
+
+        // --- SPACE BACKGROUND ---
+        const canvas = document.getElementById('space-canvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        function init() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            stars = [];
+            for(let i=0; i<400; i++) stars.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*1.5});
+        }
+        function animate() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            ctx.fillStyle = "white";
+            stars.forEach(s => {
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+                ctx.fill();
+                s.y += 0.2; if(s.y > canvas.height) s.y = 0;
+            });
+            requestAnimationFrame(animate);
+        }
+        window.addEventListener('resize', init);
+        init(); animate();
     </script>
 </body>
 </html>
