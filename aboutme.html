@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aryan Krishan | About Me</title>
+    <style>
+        /* Base Space Theme Variables */
+        :root {
+            --primary-color: #0f172a;
+            --secondary-color: #3b82f6;
+            --text-color: #ffffff;
+            --accent-font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--accent-font);
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            background-color: #020205; 
+            overflow-x: hidden;
+            line-height: 1.6;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7.127 22.562l-7.127 1.438 1.438-7.128 5.689 5.69zm1.414-1.414l11.228-11.225-5.69-5.692-11.227 11.227 5.689 5.69zm9.768-21.148l-2.816 2.817 5.691 5.691 2.816-2.819-5.691-5.689z" fill="%23ffffff"/></svg>') 0 24, auto;
+        }
+
+        /* Space Canvas Background */
+        #space-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; }
+
+        /* Sparkle Effect */
+        .sparkle {
+            position: fixed; pointer-events: none; width: 4px; height: 4px;
+            background-color: white; border-radius: 50%;
+            box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.8); z-index: 9999;
+            animation: sparkleFade 0.8s ease-out forwards;
+        }
+        @keyframes sparkleFade { 0% { opacity: 1; transform: scale(1) translateY(0); } 100% { opacity: 0; transform: scale(0.1) translateY(15px); } }
+
+        /* Navigation */
+        nav {
+            padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(2, 2, 5, 0.6); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .nav-links { display: flex; gap: 25px; }
+        .nav-links a { color: white; text-decoration: none; font-size: 0.95rem; transition: 0.3s; cursor: inherit; padding: 8px 16px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.3);}
+        .nav-links a:hover { background: white; color: black; }
+
+        /* Main Container */
+        .container { max-width: 1000px; margin: 0 auto; padding: 60px 5%; }
+        .page-title { font-size: 3.5rem; font-weight: 300; margin-bottom: 60px; text-align: center; }
+
+        /* Interactive Scroll Sections */
+        .about-block {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            margin-bottom: 100px;
+            opacity: 0; /* Hidden initially for animation */
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        /* Every even block reverses the layout (Image left, text right) */
+        .about-block:nth-child(even) { flex-direction: row-reverse; }
+        
+        /* When JS adds this class, it fades in */
+        .about-block.visible { opacity: 1; transform: translateY(0); }
+
+        .text-content { flex: 1; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(10px); padding: 40px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+        .text-content h2 { color: var(--secondary-color); font-weight: 400; margin-top: 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;}
+        .text-content p, .text-content li { color: #cbd5e1; font-size: 1.05rem; }
+        
+        /* Image Area */
+        .image-content { flex: 1; display: flex; justify-content: center; align-items: center; }
+        .image-content img { width: 100%; max-width: 450px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); object-fit: cover; aspect-ratio: 4/3; background: rgba(255,255,255,0.05);}
+
+        /* Buttons Section */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+            margin-bottom: 80px;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 50px;
+            cursor: inherit;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-align: center;
+        }
+
+        .btn-outline { background: transparent; color: white; border: 1px solid white; }
+        .btn-outline:hover { background: white; color: black; box-shadow: 0 10px 20px rgba(255,255,255,0.1); transform: translateY(-2px);}
+        
+        .btn-solid { background: white; color: black; border: 1px solid white; }
+        .btn-solid:hover { background: #e2e8f0; box-shadow: 0 10px 20px rgba(255,255,255,0.2); transform: translateY(-2px);}
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .about-block, .about-block:nth-child(even) { flex-direction: column; text-align: center; gap: 30px; }
+            .action-buttons { flex-direction: column; padding: 0 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="space-canvas"></canvas>
+
+    <nav>
+        <div class="nav-links">
+            <a href="index.html">← Back to Universe</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="page-title">About Me</h1>
+
+        <div class="about-block">
+            <div class="text-content">
+                <h2>The Foundation</h2>
+                <p>I am a dynamic business professional currently pursuing an MBA at IIT Jodhpur, building upon a strong foundation with a BSc in Psychology. I combine analytical thinking with a deep understanding of human behavior to drive meaningful business results and create better products.</p>
+            </div>
+            <div class="image-content">
+                <img src="YOUR_IMAGE_LINK_1.jpg" alt="Aryan Krishan Background">
+            </div>
+        </div>
+
+        <div class="about-block">
+            <div class="text-content">
+                <h2>Professional Experience</h2>
+                <ul>
+                    <li style="margin-bottom: 10px;"><strong>Jai Bharat Industries</strong> - 15 months of impactful work experience managing operations and strategy.</li>
+                    <li><strong>Spice N Grilled Foods Pvt. Ltd. (SGF)</strong> - Marketing Internship focusing on brand outreach.</li>
+                </ul>
+            </div>
+            <div class="image-content">
+                <img src="YOUR_IMAGE_LINK_2.jpg" alt="Aryan Krishan Work Experience">
+            </div>
+        </div>
+
+        <div class="about-block">
+            <div class="text-content">
+                <h2>My Arsenal</h2>
+                <p>I bridge the gap between data and execution. I hold a <strong>Google Project Management Professional Certificate</strong> and am highly skilled in building complex visual dashboards using <strong>Power BI</strong> (like my Mercedes-Benz sales tracker). My expertise spans digital marketing, SEO auditing, and emerging tech strategies.</p>
+            </div>
+            <div class="image-content">
+                <img src="YOUR_IMAGE_LINK_3.jpg" alt="Aryan Krishan Skills">
+            </div>
+        </div>
+
+        <div class="about-block">
+            <div class="text-content">
+                <h2>Beyond the Desk</h2>
+                <p>When I'm not optimizing dashboards or building businesses, I am an avid ultra-marathon runner constantly pushing my physical limits (current 5km PR: 17:22). I also host the <em>House of Perspective</em> podcast, exploring diverse ideas and stories, and am the founder of the "Not Average" clothing brand.</p>
+            </div>
+            <div class="image-content">
+                <img src="YOUR_IMAGE_LINK_4.jpg" alt="Aryan Krishan Running/Podcast">
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="#" class="btn btn-outline">Check My New Research</a>
+            
+            <a href="resume.pdf" download="Aryan_Krishan_Resume.pdf" class="btn btn-solid">Download My Resume</a>
+        </div>
+
+    </div>
+
+    <script>
+        // --- SCROLL ANIMATION LOGIC ---
+        // This observes when an element comes into view and triggers the fade-in
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 }); // Triggers when 15% of the block is visible
+
+        document.querySelectorAll('.about-block').forEach((block) => {
+            observer.observe(block);
+        });
+
+        // --- SPARKLE CURSOR LOGIC ---
+        let lastSparkleTime = 0;
+        document.addEventListener('mousemove', function(e) {
+            const now = Date.now();
+            if (now - lastSparkleTime > 40) {
+                createSparkle(e.clientX, e.clientY);
+                lastSparkleTime = now;
+            }
+        });
+
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = (x - 2) + 'px';
+            sparkle.style.top = (y + 10) + 'px';
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 800);
+        }
+
+        // --- SPACE BACKGROUND LOGIC ---
+        const canvas = document.getElementById('space-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let stars = [];
+        const numStars = 600; 
+        let speed = 0.2; 
+
+        function resize() {
+            width = window.innerWidth; height = window.innerHeight;
+            canvas.width = width; canvas.height = height;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        for (let i = 0; i < numStars; i++) {
+            stars.push({
+                x: Math.random() * width * 2 - width,
+                y: Math.random() * height * 2 - height,
+                z: Math.random() * width
+            });
+        }
+
+        function drawStars() {
+            ctx.fillStyle = 'rgba(2, 2, 5, 1)'; ctx.fillRect(0, 0, width, height);
+            stars.forEach(star => {
+                star.z -= speed;
+                if (star.z <= 0) {
+                    star.z = width; star.x = Math.random() * width * 2 - width; star.y = Math.random() * height * 2 - height;
+                }
+                const k = 128.0 / star.z;
+                const px = star.x * k + width / 2;
+                const py = star.y * k + height / 2;
+                const opacity = Math.min(1, (1 - star.z / width) * 2);
+
+                if (px >= 0 && px <= width && py >= 0 && py <= height) {
+                    const size = Math.max(0.5, (1 - star.z / width) * 2);
+                    ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+                    ctx.fillRect(px, py, size, size);
+                }
+            });
+            requestAnimationFrame(drawStars);
+        }
+        drawStars();
+    </script>
+</body>
+</html>
