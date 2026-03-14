@@ -12,115 +12,259 @@
             --text-color: #ffffff;
         }
 
-        /* FLAW 1 FIXED: The missing 'body' word is restored */
+        /* Modern, clean font for the whole site */
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
             color: var(--text-color);
             line-height: 1.6;
-            background-color: #020205; 
-            
-            /* FLAW 2 FIXED: These lock the screen and stop the scrolling */
-            height: 100vh;
-            overflow: hidden; 
-            display: flex;
-            flex-direction: column;
-            
+            background-color: #020205; /* Deepest space black */
+            overflow-x: hidden;
+            /* Custom Pen Cursor */
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7.127 22.562l-7.127 1.438 1.438-7.128 5.689 5.69zm1.414-1.414l11.228-11.225-5.69-5.692-11.227 11.227 5.689 5.69zm9.768-21.148l-2.816 2.817 5.691 5.691 2.816-2.819-5.691-5.689z" fill="%23ffffff"/></svg>') 0 24, auto;
         }
 
         /* Space Canvas Background */
-        #space-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; }
+        #space-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1; 
+        }
 
         /* Sparkle Effect */
         .sparkle {
-            position: fixed; pointer-events: none; width: 4px; height: 4px;
-            background-color: white; border-radius: 50%;
-            box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.8); z-index: 9999;
+            position: fixed;
+            pointer-events: none;
+            width: 4px;
+            height: 4px;
+            background-color: white;
+            border-radius: 50%;
+            box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.8);
+            z-index: 9999;
             animation: sparkleFade 0.8s ease-out forwards;
         }
-        @keyframes sparkleFade { 0% { opacity: 1; transform: scale(1) translateY(0); } 100% { opacity: 0; transform: scale(0.1) translateY(15px); } }
 
-        /* Intro Sequence Overlay */
-        #intro-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: transparent; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 2000; transition: opacity 1.5s ease, transform 1.5s ease;
+        @keyframes sparkleFade {
+            0% { opacity: 1; transform: scale(1) translateY(0); }
+            100% { opacity: 0; transform: scale(0.1) translateY(15px); }
         }
-        #intro-overlay h1 { font-size: 4rem; letter-spacing: 2px; margin-bottom: 30px; font-weight: 300; text-align: center; }
+
+        /* Intro Sequence Overlay - NOW TRANSPARENT to see stars */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: transparent; /* Changed from solid black */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            transition: opacity 1.5s ease, transform 1.5s ease;
+        }
+
+        /* Sleek modern font for the intro */
+        #intro-overlay h1 {
+            font-size: 4rem;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            font-weight: 300; 
+            text-align: center;
+        }
 
         #lets-go-btn {
-            padding: 12px 40px; font-size: 1.2rem; background-color: transparent; color: white; border: 1px solid white; 
-            border-radius: 30px; cursor: inherit; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;
+            padding: 12px 40px;
+            font-size: 1.2rem;
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+            border-radius: 30px;
+            cursor: inherit;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        #lets-go-btn:hover { background-color: white; color: black; box-shadow: 0 0 20px rgba(255,255,255,0.3); }
+
+        #lets-go-btn:hover {
+            background-color: white;
+            color: black;
+            box-shadow: 0 0 20px rgba(255,255,255,0.3);
+        }
 
         /* Navigation */
         nav {
-            background-color: rgba(5, 5, 10, 0.5); backdrop-filter: blur(10px); color: white; padding: 1.5rem 5%; 
-            display: flex; justify-content: space-between; align-items: center; opacity: 0; transition: opacity 1s ease; z-index: 100;
+            background-color: rgba(5, 5, 10, 0.5);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            opacity: 0; /* Hidden until warp jump */
+            transition: opacity 1s ease;
         }
+
         nav h1 { margin: 0; font-size: 1.2rem; font-weight: 600; letter-spacing: 1px; }
+        
         .nav-links { display: flex; gap: 25px; }
-        .nav-links a { color: #94a3b8; text-decoration: none; font-weight: 400; font-size: 0.95rem; cursor: inherit; transition: color 0.3s ease; }
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.95rem;
+            cursor: inherit;
+            transition: color 0.3s ease;
+        }
         .nav-links a:hover, .nav-links a.active { color: white; }
 
         /* General Sections */
-        .page-section { display: none; flex: 1; padding: 0 5%; animation: fadeIn 0.5s ease; position: relative; }
+        .page-section {
+            display: none;
+            padding: 4rem 5%;
+            max-width: 1000px;
+            margin: 0 auto;
+            animation: fadeIn 0.5s ease;
+            position: relative;
+        }
         
-        /* Modifying how the active page displays to keep vertical centering */
-        .page-section.active { display: flex; align-items: center; }
+        /* Glassmorphism boxes for content to float over space */
+        .content-bg {
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .page-section.active { display: block; }
 
-        /* Hero Section Container */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 { font-weight: 400; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 15px; margin-bottom: 30px;}
+
+        /* Hero Section */
+        #home {
+            display: none; 
+            max-width: 1200px;
+            min-height: 80vh;
+        }
+        
         .hero-container {
-            display: flex; align-items: center; justify-content: space-between;
-            width: 100%; height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            margin-top: 5vh;
         }
 
-        .hero-text { flex: 1.2; }
-        
-        .hero-text h1 { font-size: 4rem; line-height: 1.2; margin: 0 0 30px 0; font-weight: 500; }
-        
-        /* Forces Name to one line */
-        .name-line { white-space: nowrap; }
-        
-        /* Forces Title to the next line automatically */
-        .title-line { display: block; font-size: 3.5rem; color: #cbd5e1; margin-top: 10px; font-weight: 400; }
+        .hero-text {
+            flex: 1.5;
+        }
 
-        .hero-buttons { display: flex; gap: 20px; }
+        .hero-text h1 {
+            font-size: 4rem;
+            line-height: 1.2;
+            margin: 0 0 30px 0;
+            font-weight: 500;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
         .pill-btn {
-            background-color: white; color: #000; font-size: 1rem; font-weight: 500; padding: 12px 35px; 
-            border-radius: 50px; border: none; cursor: inherit; transition: transform 0.2s ease, box-shadow 0.2s ease;
+            background-color: white;
+            color: #000;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 12px 35px;
+            border-radius: 50px;
+            border: none;
+            cursor: inherit;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        .pill-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255,255,255,0.1); }
 
-        /* FLAW 3 FIXED: Image Middle Vertical, Right Horizontal */
+        .pill-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
+        }
+
+        /* Fixed Image Aspect Ratio */
         .hero-image {
             flex: 1;
             display: flex;
-            justify-content: flex-end; /* Pushes image to the RIGHT */
-            align-items: center; /* Pushes image to the MIDDLE VERTICAL */
-            height: 100%;
+            justify-content: center; /* Centers the image */
+            align-items: center;
+            height: 1000px; /* Gives the image a fixed area to exist in */
         }
 
         .hero-image img {
-            max-height: 75vh; /* Large, but safely fits inside the screen */
-            max-width: 100%; 
-            object-fit: contain; 
+            max-width: 800px;
+            height: auto; /* forces it to take the height of the container */
+            width: 120%; /* prevents horizontal stretching */
+            object-fit: contain; /* PERFECT RATIO: prevents any squishing */
+            transform: translateX(30px);
+            
+    
+        }
+
+        /* Cards */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: background 0.3s ease;
+        }
+        .card:hover { background: rgba(255, 255, 255, 0.08); }
+
+        /* Forms */
+        input, textarea {
+            width: 100%; padding: 12px; margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; box-sizing: border-box;
+            background: rgba(0,0,0,0.3); color: white;
+            cursor: inherit;
+            font-family: inherit;
         }
 
         /* Chatbot: aryan jr. */
-        #chatbot-container { position: fixed; bottom: 20px; right: 20px; width: 320px; z-index: 1000; color: #333; }
-        #chatbot-header { background-color: white; color: black; padding: 15px; border-radius: 12px 12px 0 0; cursor: inherit; font-weight: 600; display: flex; justify-content: space-between; }
-        #chatbot-window { background: white; border-radius: 0 0 12px 12px; display: none; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        #chatbot-messages { height: 250px; padding: 15px; overflow-y: auto; font-size: 0.9rem; border-bottom: 1px solid #eee; background: #f8fafc; }
+        #chatbot-container {
+            position: fixed; bottom: 20px; right: 20px;
+            width: 320px; z-index: 1000;
+            color: #333;
+        }
+        #chatbot-header {
+            background-color: white; color: black;
+            padding: 15px; border-radius: 12px 12px 0 0;
+            cursor: inherit; font-weight: 600; display: flex; justify-content: space-between;
+        }
+        #chatbot-window {
+            background: white; border-radius: 0 0 12px 12px; display: none; flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        #chatbot-messages {
+            height: 250px; padding: 15px; overflow-y: auto; font-size: 0.9rem;
+            border-bottom: 1px solid #eee; background: #f8fafc;
+        }
         .bot-msg { background: #e2e8f0; padding: 10px; border-radius: 8px; margin-bottom: 10px; display: inline-block;}
         #chatbot-input-area { display: flex; padding: 10px; background: white; border-radius: 0 0 12px 12px;}
-        #chatbot-input-area input { margin-bottom: 0; border: 1px solid #ddd; border-radius: 6px 0 0 6px; color: black; background: white; padding: 10px; width: 100%; box-sizing: border-box;}
+        #chatbot-input-area input { margin-bottom: 0; border: 1px solid #ddd; border-radius: 6px 0 0 6px; color: black; background: white; padding: 10px;}
         #chatbot-input-area button { border-radius: 0 6px 6px 0; padding: 10px 15px; background-color: black; color: white; border: none; cursor: inherit;}
+
     </style>
 </head>
 <body>
@@ -143,14 +287,10 @@
         </div>
     </nav>
 
-    <main id="home" class="page-section active">
+    <main id="home" class="page-section">
         <div class="hero-container">
             <div class="hero-text">
-                <h1>
-                    Hi,<br>
-                    <span class="name-line">I'm Aryan Krishan</span>
-                    <span class="title-line">Product and Marketing guy</span>
-                </h1>
+                <h1>Hi,<br>I'm Aryan Krishan<br>Product and Marketing guy</h1>
                 <div class="hero-buttons">
                     <button class="pill-btn" onclick="window.location.href='projects.html'">My Work</button>
                     <button class="pill-btn" onclick="window.open('M24MSA016_AryanKrishan (1).pdf', '_blank')">Resume</button>
@@ -159,6 +299,68 @@
             <div class="hero-image">
                 <img src="Aryan Krishan.png" alt="Aryan Krishan">
             </div>
+        </div>
+    </main>
+
+    <main id="about" class="page-section">
+        <div class="content-bg">
+            <h2>About Me</h2>
+            <p>I am a dynamic business professional currently pursuing an MBA at IIT Jodhpur, building upon a strong foundation with a BSc in Psychology. I combine analytical thinking with an understanding of human behavior to drive business results.</p>
+            
+            <h3 style="margin-top: 30px;">Professional Experience</h3>
+            <ul>
+                <li><strong>Jai Bharat Industries</strong> - 15 months of impactful work experience managing operations and strategy.</li>
+                <li><strong>Spice N Grilled Foods Pvt. Ltd. (SGF)</strong> - Marketing Internship focusing on brand outreach.</li>
+                <li>Google Project Management Professional Certificate holder.</li>
+            </ul>
+
+            <h3 style="margin-top: 30px;">Beyond the Desk</h3>
+            <p>When I'm not optimizing dashboards or building businesses, I am an avid ultra-marathon runner constantly pushing my limits (current 5km PR: 17:22). I also host the <em>House of Perspective</em> podcast, exploring diverse ideas and stories.</p>
+        </div>
+    </main>
+
+    <main id="projects" class="page-section">
+        <div class="content-bg">
+            <h2>Featured Projects</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3 style="margin-top: 0;">Mercedes-Benz Sales Dashboard</h3>
+                    <p style="color: #cbd5e1;">A comprehensive Power BI dashboard built to visualize complex automotive sales data, highlighting key performance indicators and regional trends for strategic decision-making.</p>
+                </div>
+                <div class="card">
+                    <h3 style="margin-top: 0;">Not Average (Clothing Brand)</h3>
+                    <p style="color: #cbd5e1;">Founded an entrepreneurial venture focused on high-quality streetwear. Managed everything from the conceptualization of "The Ritual" product lines to go-to-market strategies.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <main id="blogs" class="page-section">
+        <div class="content-bg">
+            <h2>Latest Insights</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3 style="margin-top: 0;">The Intersection of Psychology and Marketing</h3>
+                    <p style="color: #cbd5e1;"><em>Coming soon.</em> An exploration into neuromarketing and how understanding human behavior drives better sales strategies.</p>
+                </div>
+                <div class="card">
+                    <h3 style="margin-top: 0;">Endurance in Business: Lessons from Ultra-Marathons</h3>
+                    <p style="color: #cbd5e1;"><em>Coming soon.</em> How the mental fortitude required for long-distance running translates perfectly into startup entrepreneurship.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <main id="contact" class="page-section">
+        <div class="content-bg">
+            <h2>Contact Me</h2>
+            <p>Interested in collaborating, discussing a project, or just talking about Formula 1? Leave a message below.</p>
+            <form style="max-width: 500px; margin-top: 30px;" onsubmit="event.preventDefault(); alert('Message feature coming soon!');">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea rows="5" placeholder="How can I help you?" required></textarea>
+                <button type="submit" style="background-color: white; color: black; border: none; padding: 12px 25px; border-radius: 4px; font-weight: 500;">Send Message</button>
+            </form>
         </div>
     </main>
 
@@ -203,8 +405,8 @@
         const ctx = canvas.getContext('2d');
         let width, height;
         let stars = [];
-        const numStars = 600;
-        let speed = 0.2; 
+        const numStars = 600; // More stars for realism
+        let speed = 0.2; // Very slow ambient movement
         let isWarping = false;
 
         function resize() {
@@ -216,16 +418,18 @@
         window.addEventListener('resize', resize);
         resize();
 
+        // Initialize realistic stars
         for (let i = 0; i < numStars; i++) {
             stars.push({
                 x: Math.random() * width * 2 - width,
                 y: Math.random() * height * 2 - height,
                 z: Math.random() * width,
-                pz: Math.random() * width 
+                pz: Math.random() * width // Previous Z for drawing lines
             });
         }
 
         function drawStars() {
+            // Very dark, slightly transparent background to create trails during warp
             ctx.fillStyle = isWarping ? 'rgba(2, 2, 5, 0.2)' : 'rgba(2, 2, 5, 1)';
             ctx.fillRect(0, 0, width, height);
             
@@ -234,11 +438,13 @@
                 star.z -= speed;
 
                 if (star.z <= 0) {
-                    star.z = width; star.pz = width;
+                    star.z = width;
+                    star.pz = width;
                     star.x = Math.random() * width * 2 - width;
                     star.y = Math.random() * height * 2 - height;
                 }
 
+                // 3D projection math
                 const k = 128.0 / star.z;
                 const px = star.x * k + width / 2;
                 const py = star.y * k + height / 2;
@@ -247,10 +453,12 @@
                 const ppx = star.x * pk + width / 2;
                 const ppy = star.y * pk + height / 2;
                 
+                // Opacity based on distance (z)
                 const opacity = Math.min(1, (1 - star.z / width) * 2);
 
                 if (px >= 0 && px <= width && py >= 0 && py <= height) {
                     if (isWarping) {
+                        // Draw lightspeed streaks
                         ctx.beginPath();
                         ctx.moveTo(ppx, ppy);
                         ctx.lineTo(px, py);
@@ -258,35 +466,39 @@
                         ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
                         ctx.stroke();
                     } else {
+                        // Draw realistic sharp star points
                         const size = Math.max(0.5, (1 - star.z / width) * 2);
                         ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
                         ctx.fillRect(px, py, size, size);
                     }
                 }
             });
+
             requestAnimationFrame(drawStars);
         }
         drawStars();
 
         // --- TRANSITION LOGIC ---
         function startJourney() {
-            speed = 40; 
+            speed = 40; // Lightspeed engage!
             isWarping = true;
+            
             const intro = document.getElementById('intro-overlay');
-            intro.style.transform = 'scale(2)'; 
+            intro.style.transform = 'scale(2)'; // Zoom text out
             intro.style.opacity = '0';
 
             setTimeout(() => {
                 intro.style.display = 'none';
+                
+                // Settle back to ambient space
                 speed = 0.5;
                 isWarping = false;
-                document.getElementById('main-nav').style.opacity = '1';
                 
-                // Show the home section
-                const homeSection = document.getElementById('home');
-                homeSection.style.display = 'flex'; // Uses flex to maintain vertical center
-                void homeSection.offsetWidth; 
-                homeSection.classList.add('active');
+                // Fade in main site
+                document.getElementById('main-nav').style.opacity = '1';
+                document.getElementById('home').style.display = 'block';
+                void document.getElementById('home').offsetWidth; // Trigger reflow
+                document.getElementById('home').classList.add('active');
             }, 1000); 
         }
 
@@ -295,21 +507,17 @@
             const sections = document.querySelectorAll('.page-section');
             sections.forEach(sec => {
                 sec.classList.remove('active');
-                sec.style.display = 'none'; 
+                if(sec.id === 'home') sec.style.display = 'none'; 
             });
             
             const links = document.querySelectorAll('.nav-links a');
             links.forEach(link => link.classList.remove('active'));
 
             const targetSection = document.getElementById(pageId);
-            if(targetSection) {
-                targetSection.style.display = 'flex';
-                targetSection.classList.add('active');
-            }
+            if(pageId === 'home') targetSection.style.display = 'block';
+            targetSection.classList.add('active');
             
-            const targetLink = document.getElementById('link-' + pageId);
-            if(targetLink) targetLink.classList.add('active');
-            
+            document.getElementById('link-' + pageId).classList.add('active');
             window.scrollTo(0,0);
         }
 
@@ -339,7 +547,6 @@
             
             const userDiv = document.createElement('div');
             userDiv.style.textAlign = 'right';
-            // FLAW 4 FIXED: Restored standard backticks so the script runs properly
             userDiv.innerHTML = `<span style="background:black; color:white; padding:10px; border-radius:8px; margin-bottom:10px; display:inline-block;">${msg}</span>`;
             msgContainer.appendChild(userDiv);
             
