@@ -162,12 +162,45 @@
             font-size: 1.05rem;
         }
 
+        /* --- NEW BUTTON CSS I ADDED --- */
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        .action-btn {
+            background-color: white;
+            color: black;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: inherit;
+        }
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255,255,255,0.15);
+        }
+        .action-btn.outline {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+        .action-btn.outline:hover {
+            background-color: white;
+            color: black;
+        }
+
         /* Mobile responsiveness */
         @media (max-width: 768px) {
             .project-container { margin: 20px; padding: 20px; }
             .project-title { font-size: 2rem; }
             .mySlides { height: 250px; }
             nav { flex-direction: column; gap: 15px; }
+            .action-buttons { justify-content: center; } /* Centers buttons on phone */
         }
     </style>
 </head>
@@ -189,9 +222,10 @@
         <h1 class="project-title">Royal Enfield UX+</h1>
 
         <div class="slideshow-container">
-            <img class="mySlides active-slide" src="RE1.png" alt="Prototype Landing Page">
-            <img class="mySlides" src="RE2.png" alt="UX Flowchart and IA">
-            <img class="mySlides" src="RE3.png" alt="Mobile View Interface">
+            <img class="re1.png" src="RE1.png" alt="Prototype Landing Page">
+            <img class="re2.png" src="RE2.png" alt="UX Flowchart and IA">
+            <img class="re3.png" src="RE3.png" alt="Mobile View Interface">
+            <img class="re4.png" src="RE3.png" alt="Mobile View Interface">
             
             <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
             <button class="next" onclick="changeSlide(1)">&#10095;</button>
@@ -212,6 +246,12 @@
 
             <h3>The Outcome</h3>
             <p>I successfully created a functional, high-fidelity UI/UX prototype that provides a more intuitive browsing experience. By adding a clear "Start" path and simplified categories, the project demonstrates how to reduce user friction and increase the likelihood of a test ride booking. The final output includes a clear mapping of the entire 350cc to 650cc lineup, ensuring every user find a bike that fits their lifestyle in just a few clicks.</p>
+
+            <div class="action-buttons">
+                <a href="https://aryankrishan2002.github.io/royal-enfield-finder/" target="_blank" class="action-btn">View My Prototype</a>
+                
+                <a href="https://www.royalenfield.com" target="_blank" class="action-btn outline">Visit Official RE Website</a>
+            </div>
 
         </div>
 
