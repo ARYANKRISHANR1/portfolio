@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not Average | Case Study</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #050505;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --accent-red: #dc2626;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Gritty Film Grain Overlay for Streetwear Vibe */
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Custom Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 5%;
+            position: absolute;
+            width: 90%;
+            top: 0;
+            z-index: 100;
+        }
+
+        /* Logo in Top Left */
+        .brand-logo img {
+            height: 40px; /* Adjust based on your logo size */
+            width: auto;
+            filter: grayscale(100%) contrast(200%); /* Keeps it stark and striking */
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-left: 30px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 5%;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .brand-title {
+            font-family: 'Anton', sans-serif;
+            font-size: 8rem;
+            text-transform: uppercase;
+            margin: 0;
+            letter-spacing: -2px;
+            line-height: 1;
+            color: var(--text-main);
+        }
+
+        .brand-tagline {
+            font-family: 'Anton', sans-serif;
+            font-size: 2rem;
+            color: var(--accent-red);
+            text-transform: uppercase;
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+
+        /* The Big Action Button */
+        .cta-button {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--bg-color);
+            background-color: var(--text-main);
+            text-decoration: none;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: var(--accent-red);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(220, 38, 38, 0.2);
+        }
+
+        /* Layout for Content */
+        .content-grid {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        /* Image Placeholder for Streetwear look */
+        .image-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .image-gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            filter: grayscale(20%);
+            transition: filter 0.5s ease;
+        }
+
+        .image-gallery img:hover {
+            filter: grayscale(0%);
+        }
+
+        .project-details h3 {
+            font-family: 'Anton', sans-serif;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            border-left: 4px solid var(--accent-red);
+            padding-left: 15px;
+        }
+
+        .project-details p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        .project-details ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .project-details li {
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .project-details li::before {
+            content: '■';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: var(--accent-red);
+            font-size: 0.8rem;
+        }
+
+        .project-details strong {
+            color: var(--text-main);
+        }
+
+        @media (max-width: 900px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .brand-title { font-size: 4rem; }
+            .brand-tagline { font-size: 1.2rem; }
+            nav { flex-direction: column; gap: 20px; text-align: center; }
+            .nav-links a { margin: 0 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="grain-overlay"></div>
+
+    <nav>
+        <div class="brand-logo">
+            <img src="logo.png" alt="Not Average Logo">
+        </div>
+        
+        <div class="nav-links">
+            <a href="projects.html">BACK TO PORTFOLIO</a>
+            <a href="index.html">HOME</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1 class="brand-title">Not Average</h1>
+        <div class="brand-tagline">Average is a choice. Surpassing it is a discipline.</div>
+        
+        <a href="https://your-not-average-website.com" target="_blank" class="cta-button">Join The Movement</a>
+    </header>
+
+    <main class="content-grid">
+        
+        <div class="image-gallery">
+            <img src="NotAverage1.jpg" alt="Not Average Apparel Shot 1">
+            <img src="NotAverage2.jpg" alt="Not Average Apparel Shot 2">
+        </div>
+
+        <div class="project-details">
+            
+            <h3>Overview</h3>
+            <p>Not Average is a lifestyle and apparel movement born out of the belief that mediocrity is a choice. The market is flooded with "average" fast fashion that lacks soul; Not Average was created to fill that gap. It is a brand for the high-performers, the ultramarathoners, and the dreamers who refuse to settle for the status quo. We don’t just sell clothes; we provide the uniform for those committed to surpassing their current limits.</p>
+
+            <h3>My Role & Execution</h3>
+            <ul>
+                <li><strong>Founder & Creative Director:</strong> Conceptualized the brand identity, naming, and the "surpassing" philosophy that drives every design.</li>
+                <li><strong>Product Development & Sourcing:</strong> Spearheaded R&D for high-quality fabrics. Developed a custom Arduino-based color-sensing tool to ensure apparel perfectly matches iconic sneakers (like Jordan colorways), solving a common frustration.</li>
+                <li><strong>Consumer Psychology Integration:</strong> Applied psychological principles of "enclothed cognition" to design apparel that actively boosts the wearer's confidence and focus.</li>
+                <li><strong>Digital Strategy & Content:</strong> Managed end-to-end digital presence, producing high-energy video content and building a highly disciplined community on Instagram.</li>
+            </ul>
+
+            <h3>The Outcome</h3>
+            <p>Not Average has evolved from a classroom concept into a living brand with a dedicated following. We successfully bridged the gap between premium streetwear and motivational gear. By maintaining a 100% focus on the "Not Average" lifestyle, the brand sees consistent engagement from a community of creators and athletes who value precision, quality, and the relentless pursuit of being better than they were yesterday.</p>
+
+        </div>
+
+    </main>
+
+</body>
+</html>
