@@ -172,13 +172,13 @@
         .hero-text {
             flex: 1.5;
         }
-
-        .hero-text h1 {
-            font-size: 4rem;
-            line-height: 1.2;
-            margin: 0 0 30px 0;
-            font-weight: 500;
-        }
+.hero-text h1 {
+    font-size: 4rem;
+    line-height: 1.2;
+    margin: 0 0 30px 0;
+    font-weight: 500;
+    white-space: nowrap; /* This prevents "Aryan Krishan" from breaking into two lines */
+}
 
         .hero-buttons {
             display: flex;
@@ -211,15 +211,13 @@
             height: 1000px; /* Gives the image a fixed area to exist in */
         }
 
-        .hero-image img {
-            max-width: 800px;
-            height: auto; /* forces it to take the height of the container */
-            width: 120%; /* prevents horizontal stretching */
-            object-fit: contain; /* PERFECT RATIO: prevents any squishing */
-            transform: translateX(30px);
-            
-    
-        }
+       .hero-image img {
+    width: 140%;              /* Enlarges the image */
+    max-width: 800px;         /* Prevents it from getting TOO big */
+    height: auto;
+    object-fit: contain;
+    transform: translateX(60px); /* Pushes the image further to the right */
+}
 
         /* Cards */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
@@ -290,7 +288,11 @@
     <main id="home" class="page-section">
         <div class="hero-container">
             <div class="hero-text">
-                <h1>Hi,<br>I'm Aryan Krishan<br>Product and Marketing guy</h1>
+                <h1>
+    Hi,<br>
+    I'm Aryan Krishan<br>
+    <span style="font-size: 3.5rem;">Product and Marketing guy</span>
+</h1>
                 <div class="hero-buttons">
                     <button class="pill-btn" onclick="window.location.href='projects.html'">My Work</button>
                     <button class="pill-btn" onclick="window.open('M24MSA016_AryanKrishan (1).pdf', '_blank')">Resume</button>
