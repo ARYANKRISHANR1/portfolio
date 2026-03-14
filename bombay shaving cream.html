@@ -22,6 +22,7 @@
             background-color: #020205; /* Deepest space black */
             overflow-x: hidden;
             line-height: 1.6;
+            /* Custom Pen Cursor */
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7.127 22.562l-7.127 1.438 1.438-7.128 5.689 5.69zm1.414-1.414l11.228-11.225-5.69-5.692-11.227 11.227 5.689 5.69zm9.768-21.148l-2.816 2.817 5.691 5.691 2.816-2.819-5.691-5.689z" fill="%23ffffff"/></svg>') 0 24, auto;
         }
 
@@ -33,6 +34,18 @@
             width: 100vw;
             height: 100vh;
             z-index: -1; 
+        }
+
+        /* Sparkle Effect */
+        .sparkle {
+            position: fixed; pointer-events: none; width: 4px; height: 4px;
+            background-color: white; border-radius: 50%;
+            box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.8); z-index: 9999;
+            animation: sparkleFade 0.8s ease-out forwards;
+        }
+        @keyframes sparkleFade {
+            0% { opacity: 1; transform: scale(1) translateY(0); }
+            100% { opacity: 0; transform: scale(0.1) translateY(15px); }
         }
 
         /* Navigation Buttons */
@@ -74,7 +87,7 @@
         }
 
         .project-title {
-            font-size: 2.8rem;
+            font-size: 3rem;
             font-weight: 300;
             margin-top: 0;
             margin-bottom: 30px;
@@ -83,42 +96,60 @@
             padding-bottom: 20px;
         }
 
-        /* --- PDF VIEWER CSS --- */
-        .pdf-container {
+        /* --- SLIDESHOW CSS --- */
+        .slideshow-container {
             position: relative;
-            width: 100%;
-            height: 600px; /* Adjust height as needed */
+            max-width: 100%;
             margin: auto;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             margin-bottom: 40px;
-            background: #1e293b; 
-            border: 1px solid rgba(255,255,255,0.1);
+            background: #000; 
         }
 
-        .pdf-container iframe {
+        .mySlides {
+            display: none;
             width: 100%;
-            height: 100%;
+            height: 450px; 
+            object-fit: contain; 
+        }
+
+        .active-slide { display: block; }
+
+        .prev, .next {
+            cursor: inherit;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0,0,0,0.5);
             border: none;
         }
+
+        .next { right: 0; border-radius: 3px 0 0 3px; }
+        .prev:hover, .next:hover { background-color: rgba(255,255,255,0.8); color: black; }
 
         /* --- TEXT CONTENT CSS --- */
         .project-description h3 {
             color: #cbd5e1;
             font-size: 1.5rem;
-            margin-top: 40px;
-            margin-bottom: 15px;
+            margin-top: 30px;
             font-weight: 500;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 5px;
         }
 
         .project-description h4 {
             color: #e2e8f0;
-            font-size: 1.2rem;
-            margin-top: 25px;
-            margin-bottom: 10px;
+            font-size: 1.15rem;
+            margin-top: 20px;
+            margin-bottom: 5px;
             font-weight: 500;
         }
         
@@ -132,25 +163,18 @@
         .project-description ul {
             color: #94a3b8;
             padding-left: 20px;
-            margin-bottom: 25px;
         }
 
         .project-description li {
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             font-size: 1.05rem;
-            line-height: 1.6;
-        }
-
-        .highlight-text {
-            color: #ffffff;
-            font-weight: 500;
         }
 
         /* Mobile responsiveness */
         @media (max-width: 768px) {
             .project-container { margin: 20px; padding: 20px; }
             .project-title { font-size: 2rem; }
-            .pdf-container { height: 400px; }
+            .mySlides { height: 250px; }
             nav { flex-direction: column; gap: 15px; }
         }
     </style>
@@ -172,10 +196,19 @@
         
         <h1 class="project-title">Bombay Shaving Company: Shaving Off the Old FMCG Playbook</h1>
 
-        <div class="pdf-container">
-            <iframe src="Bombay Shaving Compony.pdf#toolbar=0&navpanes=0&scrollbar=0" title="Bombay Shaving Company Presentation">
-                <p>It appears your browser doesn't support iframes. <a href="Bombay Shaving Compony.pdf">Click here to download the PDF presentation.</a></p>
-            </iframe>
+        <div class="slideshow-container">
+            <img class="mySlides active-slide" src="bsc1.png" alt="Slide 1">
+            <img class="mySlides" src="bsc2.png" alt="Slide 2">
+            <img class="mySlides" src="bsc3.png" alt="Slide 3">
+            <img class="mySlides" src="bsc4.png" alt="Slide 4">
+            <img class="mySlides" src="bsc5.png" alt="Slide 5">
+            <img class="mySlides" src="bsc6.png" alt="Slide 6">
+            <img class="mySlides" src="bsc7.png" alt="Slide 7">
+            <img class="mySlides" src="bsc8.png" alt="Slide 8">
+            <img class="mySlides" src="bsc9.png" alt="Slide 9">
+            
+            <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+            <button class="next" onclick="changeSlide(1)">&#10095;</button>
         </div>
 
         <div class="project-description">
@@ -187,17 +220,17 @@
             
             <h4>SWOT Analysis</h4>
             <ul>
-                <li><span class="highlight-text">Strengths:</span> D2C agility, deep consumer data, and premium design aesthetic.</li>
-                <li><span class="highlight-text">Weaknesses:</span> Limited offline reach and low initial trust due to price premiums.</li>
-                <li><span class="highlight-text">Opportunities:</span> Expansion into gifting, sachet innovation for trials, and sustainable packaging.</li>
-                <li><span class="highlight-text">Threats:</span> Intense rivalry from global entrants and aggressive influencer-led brands.</li>
+                <li><strong>Strengths:</strong> D2C agility, deep consumer data, and premium design aesthetic.</li>
+                <li><strong>Weaknesses:</strong> Limited offline reach and low initial trust due to price premiums.</li>
+                <li><strong>Opportunities:</strong> Expansion into gifting, sachet innovation for trials, and sustainable packaging.</li>
+                <li><strong>Threats:</strong> Intense rivalry from global entrants and aggressive influencer-led brands.</li>
             </ul>
 
             <h4>Porter’s Five Forces</h4>
             <ul>
-                <li><span class="highlight-text">Rivalry:</span> Intense; differentiation via brand narrative is critical.</li>
-                <li><span class="highlight-text">Buyer Power:</span> Moderate; urban men are convenience-led but price-insensitive for premium quality.</li>
-                <li><span class="highlight-text">Supplier Power:</span> Low; driven by a contract manufacturing model.</li>
+                <li><strong>Rivalry:</strong> Intense; differentiation via brand narrative is critical.</li>
+                <li><strong>Buyer Power:</strong> Moderate; urban men are convenience-led but price-insensitive for premium quality.</li>
+                <li><strong>Supplier Power:</strong> Low; driven by a contract manufacturing model.</li>
             </ul>
 
             <h4>The Growth Funnel (Acquire, Convert, Retain, Advocate)</h4>
@@ -209,26 +242,26 @@
 
             <h3>My Role & What I Did</h3>
             <ul>
-                <li><span class="highlight-text">Data-Driven Product Ideation:</span> Utilized social listening and Google Trends query mining to identify market demand for new segments, such as charcoal-based products.</li>
-                <li><span class="highlight-text">UX & Tech Optimization:</span> Directed a tech stack overhaul that reduced site load time from 11s to 6s and moved key UI elements to "right-thumb zones" for mobile-first users.</li>
-                <li><span class="highlight-text">A/B Testing & Behavioral Design:</span> Conducted split testing which proved that lifestyle-based visuals outperformed product-only imagery by 40%.</li>
-                <li><span class="highlight-text">Retention Architecture:</span> Designed a 10-step post-purchase CRM email flow and gamified referral programs to increase Customer Lifetime Value.</li>
+                <li><strong>Data-Driven Product Ideation:</strong> Utilized social listening and Google Trends query mining to identify market demand for new segments, such as charcoal-based products.</li>
+                <li><strong>UX & Tech Optimization:</strong> Directed a tech stack overhaul that reduced site load time from 11s to 6s and moved key UI elements to "right-thumb zones" for mobile-first users.</li>
+                <li><strong>A/B Testing & Behavioral Design:</strong> Conducted split testing which proved that lifestyle-based visuals outperformed product-only imagery by 40%.</li>
+                <li><strong>Retention Architecture:</strong> Designed a 10-step post-purchase CRM email flow and gamified referral programs to increase Customer Lifetime Value.</li>
             </ul>
 
             <h3>The Outcome</h3>
             <p>The strategic interventions led to significant improvements across all key performance indicators (KPIs):</p>
             <ul>
-                <li><span class="highlight-text">CPC Reduction:</span> Lowered Cost Per Click from ₹21 to ₹13 (a 38% reduction).</li>
-                <li><span class="highlight-text">Engagement Boost:</span> Achieved a 1.0% CTR, representing a 54% increase in engagement.</li>
-                <li><span class="highlight-text">Bounce Rate:</span> Realized a 20% reduction in site bounce rate through UX improvements.</li>
-                <li><span class="highlight-text">Retention:</span> Drove a 30% increase in repeat purchase rates through automated replenishment nudges.</li>
+                <li><strong>CPC Reduction:</strong> Lowered Cost Per Click from ₹21 to ₹13 (a 38% reduction).</li>
+                <li><strong>Engagement Boost:</strong> Achieved a 1.0% CTR, representing a 54% increase in engagement.</li>
+                <li><strong>Bounce Rate:</strong> Realized a 20% reduction in site bounce rate through UX improvements.</li>
+                <li><strong>Retention:</strong> Drove a 30% increase in repeat purchase rates through automated replenishment nudges.</li>
             </ul>
 
             <h3>Strategic Roadmap for the Future</h3>
             <ul>
-                <li><span class="highlight-text">Short Term (0-6 Months):</span> Focus on "Funnel Repair" through site speed and sachet-led trials to widen the customer base.</li>
-                <li><span class="highlight-text">Mid Term (6-12 Months):</span> Launch the "BSC Tribe" loyalty program and expand into men’s fragrance and intimate hygiene.</li>
-                <li><span class="highlight-text">Long Term (12+ Months):</span> International expansion via Amazon Global and positioning the brand as a "Modern Masculinity" movement.</li>
+                <li><strong>Short Term (0-6 Months):</strong> Focus on "Funnel Repair" through site speed and sachet-led trials to widen the customer base.</li>
+                <li><strong>Mid Term (6-12 Months):</strong> Launch the "BSC Tribe" loyalty program and expand into men’s fragrance and intimate hygiene.</li>
+                <li><strong>Long Term (12+ Months):</strong> International expansion via Amazon Global and positioning the brand as a "Modern Masculinity" movement.</li>
             </ul>
 
         </div>
@@ -236,6 +269,18 @@
     </main>
 
     <script>
+        // --- SLIDESHOW LOGIC ---
+        let slideIndex = 0;
+        const slides = document.getElementsByClassName("mySlides");
+
+        function changeSlide(n) {
+            slides[slideIndex].classList.remove("active-slide");
+            slideIndex += n;
+            if (slideIndex >= slides.length) { slideIndex = 0; } 
+            if (slideIndex < 0) { slideIndex = slides.length - 1; }
+            slides[slideIndex].classList.add("active-slide");
+        }
+
         // --- SPARKLE CURSOR LOGIC ---
         let lastSparkleTime = 0;
         document.addEventListener('mousemove', function(e) {
