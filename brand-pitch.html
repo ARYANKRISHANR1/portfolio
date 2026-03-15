@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Pitch Presentations | Aryan Krishan</title>
+    <style>
+        :root {
+            --primary-color: #0f172a;
+            --secondary-color: #3b82f6;
+            --text-color: #ffffff;
+            --accent-font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--accent-font);
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            background-color: #020205;
+            overflow: hidden; /* Prevents scrollbars during star animation */
+            height: 100vh;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7.127 22.562l-7.127 1.438 1.438-7.128 5.689 5.69zm1.414-1.414l11.228-11.225-5.69-5.692-11.227 11.227 5.689 5.69zm9.768-21.148l-2.816 2.817 5.691 5.691 2.816-2.819-5.691-5.689z" fill="%23ffffff"/></svg>') 0 24, auto;
+        }
+
+        #space-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1; 
+        }
+
+        /* Sparkle Effect */
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            width: 4px;
+            height: 4px;
+            background-color: white;
+            border-radius: 50%;
+            box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.8);
+            z-index: 9999;
+            animation: sparkleFade 0.8s ease-out forwards;
+        }
+
+        @keyframes sparkleFade {
+            0% { opacity: 1; transform: scale(1) translateY(0); }
+            100% { opacity: 0; transform: scale(0.1) translateY(15px); }
+        }
+
+        nav {
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(2, 2, 5, 0.6);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 90%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-links { display: flex; gap: 15px; }
+        .nav-links a { 
+            color: white; 
+            text-decoration: none; 
+            font-size: 0.85rem; 
+            transition: 0.3s; 
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+        .nav-links a:hover { background: white; color: black; }
+
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 900px;
+            width: 90%;
+        }
+
+        .option-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 40px 20px;
+            border-radius: 15px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: scale(1.05);
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .option-card h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 400;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            .options-grid { grid-template-columns: 1fr; }
+            .page-title { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="space-canvas"></canvas>
+
+    <nav>
+        <div class="nav-links">
+            <a href="index.html">← Back to Universe</a>
+            <a href="project.html">← Back to Projects</a>
+        </div>
+    </nav>
+
+    <div class="content-wrapper">
+        <h1 class="page-title">Brand Pitch Presentations</h1>
+        
+        <div class="options-grid">
+            <a href="nothing-pitch.html" class="option-card">
+                <h2>Nothing</h2>
+            </a>
+            <a href="honor-pitch.html" class="option-card">
+                <h2>Honor</h2>
+            </a>
+            <a href="alcatel-pitch.html" class="option-card">
+                <h2>Alcatel</h2>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // --- STARFIELD LOGIC ---
+        const canvas = document.getElementById('space-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, stars = [];
+        const numStars = 500;
+        let speed = 0.5;
+
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        for (let i = 0; i < numStars; i++) {
+            stars.push({
+                x: Math.random() * width * 2 - width,
+                y: Math.random() * height * 2 - height,
+                z: Math.random() * width
+            });
+        }
+
+        function drawStars() {
+            ctx.fillStyle = '#020205';
+            ctx.fillRect(0, 0, width, height);
+            stars.forEach(star => {
+                star.z -= speed;
+                if (star.z <= 0) star.z = width;
+                const k = 128.0 / star.z;
+                const px = star.x * k + width / 2;
+                const py = star.y * k + height / 2;
+                if (px >= 0 && px <= width && py >= 0 && py <= height) {
+                    const size = (1 - star.z / width) * 2.5;
+                    ctx.fillStyle = `rgba(255, 255, 255, ${1 - star.z / width})`;
+                    ctx.fillRect(px, py, size, size);
+                }
+            });
+            requestAnimationFrame(drawStars);
+        }
+        drawStars();
+
+        // --- GLITTER/SPARKLE LOGIC ---
+        document.addEventListener('mousemove', (e) => {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = e.clientX + 'px';
+            sparkle.style.top = e.clientY + 'px';
+            
+            // Randomize sparkle offset slightly for a "spread" effect
+            const moveX = (Math.random() - 0.5) * 20;
+            const moveY = (Math.random() - 0.5) * 20;
+            sparkle.style.setProperty('--x', moveX + 'px');
+            sparkle.style.setProperty('--y', moveY + 'px');
+
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 800);
+        });
+    </script>
+</body>
+</html>
