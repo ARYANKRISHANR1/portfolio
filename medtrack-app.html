@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MedTrack UI</title>
+    <title>MedTrack UI | Case Study</title>
     
     <style>
         /* Base Space Theme Variables */
@@ -77,7 +77,7 @@
 
         /* Main Project Container */
         .project-container {
-            max-width: 900px; /* Kept narrower for readability */
+            max-width: 900px; 
             margin: 40px auto;
             padding: 40px;
             background: rgba(255, 255, 255, 0.03);
@@ -105,21 +105,18 @@
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             margin-bottom: 40px;
-            background: #000; /* Black background behind images */
+            background: #000; 
         }
 
-        /* Hide the images by default */
         .mySlides {
             display: none;
             width: 100%;
-            height: 450px; /* Fixed height for consistency */
-            object-fit: contain; /* Prevents squishing */
+            height: 450px; 
+            object-fit: contain; 
         }
 
-        /* Show the active image */
         .active-slide { display: block; }
 
-        /* Next & previous buttons */
         .prev, .next {
             cursor: inherit;
             position: absolute;
@@ -152,6 +149,17 @@
             color: #94a3b8;
             font-size: 1.1rem;
             line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .project-description ul {
+            color: #94a3b8;
+            padding-left: 20px;
+        }
+
+        .project-description li {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
         }
 
         /* Mobile responsiveness */
@@ -178,15 +186,12 @@
 
     <main class="project-container">
         
-            <h1 class="project-title">MedTrack UI</h1>
+        <h1 class="project-title">MedTrack UI</h1>
 
         <div class="slideshow-container">
-            
-            <img class="mySlides active-slide" src="MedTrack1.png" alt="Project Image 1">
-            
-            <img class="mySlides" src="MedTrack2.png" alt="Project Image 2">
-            
-            <img class="mySlides" src="MedTrack3.png" alt="Project Image 3">
+            <img class="mySlides active-slide" src="MedTrack1.png" alt="MedTrack UI Slide 1">
+            <img class="mySlides" src="MedTrack2.png" alt="MedTrack UI Slide 2">
+            <img class="mySlides" src="MedTrack3.png" alt="MedTrack UI Slide 3">
             
             <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
             <button class="next" onclick="changeSlide(1)">&#10095;</button>
@@ -195,27 +200,23 @@
         <div class="project-description">
             
             <h3>Overview</h3>
-            <p>MedTrack is a digital health solution designed to eliminate the systemic inefficiency of long hospital wait times and the difficulty of navigating specialist care. In many traditional healthcare settings, patients face unpredictable delays and uncertainty about which specialist to consult. This project bridges that gap by integrating real-time queue management with an AI-driven triage system, ensuring patients see the right doctor at the exact time they are needed.</p>
+            <p>MedTrack is a digital health solution designed to eliminate systemic inefficiencies such as long hospital wait times and the difficulty of navigating specialist care. In traditional healthcare settings, patients often face unpredictable delays and uncertainty regarding which specialist to consult. This project bridges that gap by integrating real-time queue management with an AI-driven triage system, ensuring patients see the right doctor exactly when they are needed.</p>
 
             <h3>My Role & What I Did</h3>
-            <p>As the Product Designer and Lead Developer, I spearheaded the end-to-end creation of the application prototype. My contributions included:
-
-AI Triage Development: Integrated an AI suggestion engine that analyzes user-reported symptoms to recommend the appropriate specialist (e.g., Cardiologist vs. General Practitioner).
-
-Dynamic Queue Logic: Built a two-way synchronization system where doctors can edit patient schedules in real-time. If a consultation runs long or short, the doctor adjusts the timing within the app.
-
-Smart Notifications: Developed a push-notification system that alerts patients of their adjusted "arrival time" based on the doctor’s live progress, preventing crowded waiting rooms.
-
-Discovery & Records Mapping: Designed a directory for users to find top-rated doctors nearby and a secure module for managing personal medical history and previous records.</p>
+            <ul>
+                <li><strong>AI Triage Engineering:</strong> Integrated an AI suggestion engine that analyzes user-reported symptoms to recommend appropriate specialists (e.g., Cardiologist vs. General Practitioner), reducing diagnostic lag.</li>
+                <li><strong>Dynamic Queue Logic:</strong> Developed a two-way synchronization system allowing doctors to modify schedules in real-time. This "Live-Feed" architecture ensures the patient’s timeline adjusts instantly to the doctor's actual pace.</li>
+                <li><strong>"Just-in-Time" (JIT) Notifications:</strong> Built a push-notification system that alerts patients of their optimized "arrival time." This prevents crowded waiting rooms and shifts the waiting experience from the hospital to the comfort of the patient’s home.</li>
+                <li><strong>Discovery & Records Architecture:</strong> Designed a comprehensive directory for finding top-rated nearby doctors and a secure module for centralized medical history management.</li>
+            </ul>
 
             <h3>The Outcome</h3>
-            <p>The resulting prototype transforms the chaotic hospital waiting experience into a streamlined, predictable journey.
-
-Reduced Congestion: By providing "Just-in-Time" arrival notifications, the physical waiting time for patients is significantly minimized.
-
-Informed Decision Making: Users no longer guess which doctor to see; the AI provides data-backed suggestions based on symptoms and proximity.
-
-Efficiency for Providers: Doctors gain full control over their daily schedule through an intuitive interface, allowing them to manage patient flow with higher precision and less administrative overhead.</p>
+            <p>The prototype successfully transforms the chaotic hospital waiting experience into a streamlined, predictable journey:</p>
+            <ul>
+                <li><strong>Reduced Congestion:</strong> Minimized physical waiting times by shifting to an "arrival on demand" model.</li>
+                <li><strong>Data-Backed Care:</strong> Eliminated patient guesswork through AI-driven symptom mapping and specialist matching.</li>
+                <li><strong>Operational Efficiency:</strong> Empowered healthcare providers with an intuitive interface to manage patient flow with high precision, significantly reducing administrative overhead.</li>
+            </ul>
 
         </div>
 
@@ -227,15 +228,10 @@ Efficiency for Providers: Doctors gain full control over their daily schedule th
         const slides = document.getElementsByClassName("mySlides");
 
         function changeSlide(n) {
-            // Hide current slide
             slides[slideIndex].classList.remove("active-slide");
-            
-            // Calculate next slide index
             slideIndex += n;
             if (slideIndex >= slides.length) { slideIndex = 0; } 
             if (slideIndex < 0) { slideIndex = slides.length - 1; }
-            
-            // Show new slide
             slides[slideIndex].classList.add("active-slide");
         }
 
