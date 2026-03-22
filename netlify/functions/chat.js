@@ -22,7 +22,7 @@ exports.handler = async function (event) {
         "X-Title": "Aryan Jr. Chatbot"
       },
       body: JSON.stringify({
-        model: "meta-llama/llama-3.3-70b-instruct:free",
+        model: "mistralai/mistral-7b-instruct:free",
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: message }
