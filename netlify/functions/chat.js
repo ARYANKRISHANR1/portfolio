@@ -39,6 +39,15 @@ exports.handler = async function(event, context) {
 
         const data = await response.json();
 
+        // THIS IS THE MAGIC DIAGNOSTIC FIX!
+        // If Google rejects it, Aryan Jr. will tell us exactly why.
+        if (data.error) {
+            return {
+                statusCode: 200, 
+                body: JSON.stringify({ reply: `Google Error: ${data.error.message}` })
+            };
+        }
+
         if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
              const aiReply = data.candidates[0].content.parts[0].text;
              return {
@@ -47,8 +56,8 @@ exports.handler = async function(event, context) {
              };
         } else {
              return {
-                 statusCode: 500,
-                 body: JSON.stringify({ reply: "I connected to Google, but the response was weird." })
+                 statusCode: 200,
+                 body: JSON.stringify({ reply: "Google sent back strange data: " + JSON.stringify(data) })
              };
         }
 
