@@ -1,48 +1,57 @@
-exports.handler = async function(event, context) {
-    if (event.httpMethod !== 'POST') {
-        return { statusCode: 405, body: JSON.stringify({ error: 'Method Not Allowed' }) };
+exports.handler = async function (event) {
+  if (event.httpMethod !== "POST") {
+    return { statusCode: 405, body: "Method Not Allowed" };
+  }
+
+  try {
+    const { message } = JSON.parse(event.body);
+    const apiKey = process.env.OPENROUTER_API_KEY;
+
+    if (!apiKey) {
+      return { statusCode: 500, body: JSON.stringify({ reply: "API Key missing." }) };
     }
 
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) return { statusCode: 500, body: JSON.stringify({ reply: "API Key missing." }) };
+    const systemPrompt = `You are "Aryan Jr.", the virtual assistant for Aryan Krishan. Born July 12, 2002. MBA at IIT Jodhpur. BSc Psychology. Ultra-marathoner. Founder of 'Not Average'. Keep answers to 1-2 sentences.`;
 
-    const body = JSON.parse(event.body);
-    const userMessage = body.message;
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`,
+        "HTTP-Referer": "https://sage-fox-37e7be.netlify.app/",
+        "X-Title": "Aryan Jr. Chatbot"
+      },
+      body: JSON.stringify({
+        model: "google/gemini-2.0-flash-exp:free",
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: message }
+        ]
+      })
+    });
 
-    const systemPrompt = `You are "Aryan jr.", the virtual assistant for Aryan Krishan. Born July 12, 2002. MBA at IIT Jodhpur. BSc Psychology. Ultra-marathoner. Founder of 'Not Average'. Keep answers to 1-2 sentences.`;
+    const data = await response.json();
 
-    try {
-        // Using the most stable endpoint: v1beta and gemini-pro
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{ 
-                    parts: [{ text: `${systemPrompt}\n\nUser asked: ${userMessage}` }] 
-                }]
-            })
-        });
-
-        const data = await response.json();
-
-        if (data.error) {
-            return {
-                statusCode: 200, 
-                body: JSON.stringify({ reply: `Google Error: ${data.error.message}` })
-            };
-        }
-
-        if (data.candidates && data.candidates[0].content) {
-             const aiReply = data.candidates[0].content.parts[0].text;
-             return {
-                 statusCode: 200,
-                 body: JSON.stringify({ reply: aiReply })
-             };
-        }
-        
-        return { statusCode: 200, body: JSON.stringify({ reply: "I connected, but got no text back." }) };
-
-    } catch (error) {
-        return { statusCode: 500, body: JSON.stringify({ reply: "Connection failed." }) };
+    if (data.error) {
+      return {
+        statusCode: 200,
+        body: JSON.stringify({ reply: `Error: ${data.error.message}` })
+      };
     }
-}
+
+    const reply = data.choices?.[0]?.message?.content || "No response.";
+
+    return {
+      statusCode: 200,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ reply })
+    };
+
+  } catch (err) {
+    console.error("Function error:", err);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ reply: "Connection failed." })
+    };
+  }
+};
