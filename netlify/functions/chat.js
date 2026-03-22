@@ -28,13 +28,15 @@ exports.handler = async function(event, context) {
     - Hobbies: Ultra-marathoner (5km PR: 17:22), cyclist.`;
 
     try {
-        // FIXED: Updated the model name to gemini-1.5-flash-latest
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`, {
+        // CHANGED: /v1/ instead of /v1beta/ and removed -latest
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                system_instruction: { parts: [{ text: systemPrompt }] },
-                contents: [{ parts: [{ text: userMessage }] }]
+                contents: [{ 
+                    role: "user", 
+                    parts: [{ text: `System Instruction: ${systemPrompt}\n\nUser Message: ${userMessage}` }] 
+                }]
             })
         });
 
@@ -47,7 +49,7 @@ exports.handler = async function(event, context) {
             };
         }
 
-        if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
+        if (data.candidates && data.candidates[0] && data.candidates[0].content) {
              const aiReply = data.candidates[0].content.parts[0].text;
              return {
                  statusCode: 200,
@@ -56,14 +58,14 @@ exports.handler = async function(event, context) {
         } else {
              return {
                  statusCode: 200,
-                 body: JSON.stringify({ reply: "Google sent back strange data: " + JSON.stringify(data) })
+                 body: JSON.stringify({ reply: "Google responded, but I couldn't find the text." })
              };
         }
 
     } catch (error) {
         return {
             statusCode: 500,
-            body: JSON.stringify({ reply: "My connection to Google failed entirely." })
+            body: JSON.stringify({ reply: "My connection failed." })
         };
     }
 }
